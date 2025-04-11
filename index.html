@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="eu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="EJON (Euskal JavaScript Object Notation) - A cultural adaptation of JSON for the Basque language">
+    <meta name="keywords" content="EJON, JSON, Basque, Euskara, data format">
+    <meta name="author" content="Euskal Herriko Unibertsitatea & Euskaltzaindia">
+    <title>EJON - Euskal JavaScript Object Notation</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <style>
+        :root {
+            --primary-color: #005B96;
+            --secondary-color: #B3CDE0;
+            --accent-color: #03396C;
+            --text-color: #333;
+            --light-gray: #f5f5f5;
+            --border-color: #ddd;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            background-color: #fff;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        
+        .tagline {
+            font-style: italic;
+            opacity: 0.9;
+        }
+        
+        nav {
+            background-color: var(--accent-color);
+            padding: 1rem 0;
+        }
+        
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        nav li {
+            margin: 0 1rem;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        
+        nav a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: 7fr 3fr;
+            gap: 2rem;
+        }
+        
+        section {
+            margin-bottom: 2rem;
+        }
+        
+        h1, h2, h3 {
+            color: var(--primary-color);
+        }
+        
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 0.5rem;
+        }
+        
+        h2 {
+            font-size: 1.5rem;
+            margin: 1.5rem 0 1rem;
+        }
+        
+        .code-block {
+            background-color: var(--light-gray);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 1rem;
+            overflow-x: auto;
+            font-family: 'Consolas', 'Courier New', monospace;
+            margin: 1rem 0;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .feature-card {
+            background-color: white;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feature-card h3 {
+            margin-top: 0;
+            font-size: 1.25rem;
+        }
+        
+        aside {
+            background-color: var(--light-gray);
+            padding: 1.5rem;
+            border-radius: 6px;
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .sidebar-block {
+            margin-bottom: 2rem;
+        }
+        
+        .sidebar-block h3 {
+            font-size: 1.25rem;
+            margin-top: 0;
+            margin-bottom: 1rem;
+        }
+        
+        footer {
+            background-color: var(--accent-color);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+        
+        .footer-links {
+            margin-bottom: 1rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.3s;
+            margin-right: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .btn:hover {
+            background-color: var(--accent-color);
+        }
+        
+        .btn-secondary {
+            background-color: white;
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+        }
+        
+        .btn-secondary:hover {
+            background-color: var(--light-gray);
+            color: var(--accent-color);
+            border-color: var(--accent-color);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        th {
+            background-color: var(--light-gray);
+            font-weight: 600;
+        }
+        
+        tr:hover {
+            background-color: rgba(179, 205, 224, 0.1);
+        }
+        
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            nav li {
+                margin: 0.5rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">EJON</div>
+        <div class="tagline">Euskal JavaScript Object Notation</div>
+    </header>
+    
+    <nav>
+        <ul>
+            <li><a href="#overview">Overview</a></li>
+            <li><a href="#specification">Specification</a></li>
+            <li><a href="#examples">Examples</a></li>
+            <li><a href="#implementation">Implementation</a></li>
+            <li><a href="demo.html">Demo</a></li>
+            <li><a href="#documentation">Documentation</a></li>
+        </ul>
+    </nav>
+    
+    <main>
+        <div class="grid">
+            <div>
+                <section id="overview">
+                    <h1>Overview</h1>
+                    <p>
+                        <strong>EJON</strong> (pronounced /ˈeɪʒɒn/, Basque: <strong>Euskal JavaScript Object Notation</strong>) is a data interchange 
+                        format developed in the Basque Country as a cultural adaptation of JSON, incorporating elements of the 
+                        Basque language (Euskara) and cultural identity.
+                    </p>
+                    <p>
+                        Developed in 2023 by researchers from the University of the Basque Country 
+                        (Euskal Herriko Unibertsitatea) in collaboration with the Basque Language Academy (Euskaltzaindia), 
+                        EJON represents an effort to extend Basque cultural sovereignty into the realm of data formats 
+                        and programming paradigms.
+                    </p>
+                    
+                    <div class="features">
+                        <div class="feature-card">
+                            <h3>Cultural Identity</h3>
+                            <p>EJON reinforces Basque cultural identity in digital environments and promotes the use of Euskara in technical contexts.</p>
+                        </div>
+                        <div class="feature-card">
+                            <h3>JSON Compatible</h3>
+                            <p>While syntactically distinct, EJON maintains full compatibility with standard JSON through simple conversion tools.</p>
+                        </div>
+                        <div class="feature-card">
+                            <h3>Linguistic Relevance</h3>
+                            <p>Part of the broader movement for technological sovereignty among linguistic minorities.</p>
+                        </div>
+                    </div>
+                    
+                    <a href="#implementation" class="btn">Get Started</a>
+                    <a href="demo.html" class="btn btn-secondary">Try Demo</a>
+                </section>
+                
+                <section id="specification">
+                    <h1>Technical Specification</h1>
+                    <p>
+                        EJON maintains the same underlying structure as JSON but replaces standard syntax characters 
+                        with alternatives that reflect Basque linguistic heritage:
+                    </p>
+                    
+                    <table>
+                        <tr>
+                            <th>JSON</th>
+                            <th>EJON</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td><code>{}</code></td>
+                            <td><code>«»</code></td>
+                            <td>Object delimiters (guillemets)</td>
+                        </tr>
+                        <tr>
+                            <td><code>[]</code></td>
+                            <td><code>‹›</code></td>
+                            <td>Array delimiters (single guillemets)</td>
+                        </tr>
+                        <tr>
+                            <td><code>true</code></td>
+                            <td><code>bai</code></td>
+                            <td>Boolean true value (Basque: "yes")</td>
+                        </tr>
+                        <tr>
+                            <td><code>false</code></td>
+                            <td><code>ez</code></td>
+                            <td>Boolean false value (Basque: "no")</td>
+                        </tr>
+                        <tr>
+                            <td><code>null</code></td>
+                            <td><code>ezer_ez</code></td>
+                            <td>Null value (Basque: "nothing")</td>
+                        </tr>
+                    </table>
+                    
+                    <p>
+                        The specification maintains compatibility with standard JSON for all other elements, including 
+                        string literals, numbers, and the use of colons and commas as separators.
+                    </p>
+                </section>
+                
+                <section id="examples">
+                    <h1>Examples</h1>
+                    
+                    <h2>Simple EJON Object</h2>
+                    <div class="code-block">
+<pre>«
+  "izena": "Mikel Arana",
+  "adina": 34,
+  "hiria": "Donostia",
+  "lanean": bai
+»</pre>
+                    </div>
+                    
+                    <h2>EJON with Nested Structures</h2>
+                    <div class="code-block">
+<pre>«
+  "izena": "Mikel Arana",
+  "adina": 34,
+  "hiria": "Donostia",
+  "hizkuntzak": ‹"Euskara", "Gaztelania", "Ingelesa"›,
+  "lanean": bai,
+  "helbidea": «
+    "kalea": "Kale Nagusia",
+    "zenbakia": 15,
+    "postakodea": "20003"
+  »,
+  "telefonoa": ezer_ez
+»</pre>
+                    </div>
+                </section>
+                
+                <section id="implementation">
+                    <h1>Implementation</h1>
+                    
+                    <h2>Installation</h2>
+                    <div class="code-block">
+<pre>
+# Clone the repository
+git clone https://github.com/your-username/ejon.git
+cd ejon
+
+# Install dependencies (if any in the future)
+npm install</pre>
+                    </div>
+                    
+                    <h2>JavaScript Usage</h2>
+                    <div class="code-block">
+<pre>
+const EJON = require('./ejon');
+
+// Converting JavaScript object to EJON string
+const data = {
+  izena: "Mikel Arana",
+  adina: 34,
+  lanean: true
+};
+
+const ejonString = EJON.stringify(data);
+console.log(ejonString);
+// Output: «"izena":"Mikel Arana","adina":34,"lanean":bai»
+
+// Parse EJON string back to JavaScript object
+const parsedData = EJON.parse(ejonString);
+console.log(parsedData);
+// Output: { izena: 'Mikel Arana', adina: 34, lanean: true }</pre>
+                    </div>
+                    
+                    <h2>Command-line Converter</h2>
+                    <div class="code-block">
+<pre>
+# Convert JSON to EJON
+node converter.js json2ejon input.json output.ejon
+
+# Convert EJON to JSON
+node converter.js ejon2json input.ejon output.json</pre>
+                    </div>
+                </section>
+            </div>
+            
+            <aside>
+                <div class="sidebar-block">
+                    <h3>Recent Publications</h3>
+                    <ul>
+                        <li>Agirre, A., & Etxeberria, I. (2023). "Digital language normalization: The case of EJON." <em>Journal of Minority Languages in Computing</em>, 12(3), 156-172.</li>
+                        <li>Euskaltzaindia. (2023). <em>Annual Report on the Status of Euskara in Digital Environments</em>. Bilbao: Basque Language Academy Press.</li>
+                        <li>Zulaika, M. (2024). "Cultural identity in data formats: A comparative analysis of EJON and standard JSON." <em>International Journal of Cultural Computing</em>, 8(1), 45-63.</li>
+                    </ul>
+                </div>
+                
+                <div class="sidebar-block">
+                    <h3>EJON In The News</h3>
+                    <p>
+                        <strong>March 2024</strong> - The Basque regional government announces the adoption of EJON in public administration software systems.
+                    </p>
+                    <p>
+                        <strong>January 2024</strong> - EJON featured in the European Commission's report on "Digital Diversity and Minority Languages in the EU".
+                    </p>
+                    <p>
+                        <strong>November 2023</strong> - EJON wins the "Digital Innovation for Cultural Preservation" award at the European Minority Languages Technology Conference.
+                    </p>
+                </div>
+                
+                <div class="sidebar-block">
+                    <h3>Community</h3>
+                    <p>Join the growing community of EJON developers and users:</p>
+                    <ul>
+                        <li><a href="#">GitHub Repository</a></li>
+                        <li><a href="#">Developer Forum</a></li>
+                        <li><a href="#">EJON Working Group</a></li>
+                        <li><a href="#">Report Issues</a></li>
+                    </ul>
+                </div>
+            </aside>
+        </div>
+    </main>
+    
+    <footer>
+        <div class="footer-links">
+            <a href="#">GitHub</a>
+            <a href="#">Documentation</a>
+            <a href="#">Community</a>
+            <a href="#">Contributors</a>
+            <a href="#">Contact</a>
+        </div>
+        <div class="copyright">
+            &copy; 2023-2024 EJON Project, Euskal Herriko Unibertsitatea & Euskaltzaindia. <br>
+            All rights reserved.
+        </div>
+    </footer>
+</body>
+</html> 

@@ -1,0 +1,17 @@
+{
+  "izena": "Mikel Arana",
+  "adina": 34,
+  "hiria": "Donostia",
+  "hizkuntzak": [
+    "Euskara",
+    "Gaztelania",
+    "Ingelesa"
+  ],
+  "lanean": true,
+  "helbidea": {
+    "kalea": "Kale Nagusia",
+    "zenbakia": 15,
+    "postakodea": "20003"
+  },
+  "telefonoa": null
+}
